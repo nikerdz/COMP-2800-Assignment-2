@@ -104,6 +104,22 @@ class Hero extends GameObject {
     }
   }
 
+    // Move hero up while keeping it inside the canvas
+  moveUp(minY) {
+    this.y -= this.speed;
+    if (this.y < minY) {
+      this.y = minY;
+    }
+  }
+
+  // Move hero down while keeping it inside the canvas
+  moveDown(maxY) {
+    this.y += this.speed;
+    if (this.y + this.height > maxY) {
+      this.y = maxY - this.height;
+    }
+  }
+
   /*
     Attempt to fire a laser.
     Returns true only if the cooldown has expired.
@@ -164,9 +180,9 @@ let isGameOver = false;
 let pressedKeys = {};
 let enemyDirection = 1;
 let enemyMoveTimer = 0;
-let enemyMoveInterval = 30;
+let enemyMoveInterval = 45;
 let enemyShootTimer = 0;
-let enemyShootInterval = 60;
+let enemyShootInterval = 140; 
 
 /* Object size constants */
 const HERO_WIDTH = 60;
@@ -397,12 +413,23 @@ function update() {
 function updateHero() {
   if (!hero || hero.dead) return;
 
+  const minY = canvas.height * 0.55; // player stays in bottom 45% of screen
+  const maxY = canvas.height;
+
   if (pressedKeys["ArrowLeft"]) {
     hero.moveLeft();
   }
 
   if (pressedKeys["ArrowRight"]) {
     hero.moveRight(canvas.width);
+  }
+
+  if (pressedKeys["ArrowUp"]) {
+    hero.moveUp(minY);
+  }
+
+  if (pressedKeys["ArrowDown"]) {
+    hero.moveDown(maxY);
   }
 
   if (pressedKeys[" "] || pressedKeys["Spacebar"]) {
@@ -440,7 +467,7 @@ function createEnemyLaser(enemy) {
     LASER_WIDTH,
     LASER_HEIGHT,
     laserImg,
-    8,
+    5,
     "EnemyLaser"
   );
   gameObjects.push(laser);
@@ -481,29 +508,38 @@ function updateEnemies() {
     enemyMoveTimer = 0;
 
     let hitEdge = false;
+
     enemies.forEach((enemy) => {
-      enemy.x += 15 * enemyDirection;
+      enemy.x += 10 * enemyDirection; // slower horizontal movement
+      enemy.y += 3;                   // gradual downward movement every move step
 
       if (enemy.x <= 0 || enemy.x + enemy.width >= canvas.width) {
         hitEdge = true;
+      }
+
+      // if an enemy gets below the hero, player loses
+      if (hero && enemy.y >= hero.y + hero.height) {
+        endGame(false);
+      }
+
+      // if enemy reaches/touches hero area, also lose
+      if (hero && enemy.y + enemy.height >= hero.y) {
+        endGame(false);
       }
     });
 
     if (hitEdge) {
       enemyDirection *= -1;
-      enemies.forEach((enemy) => {
-        enemy.y += 20;
 
-        // If enemies descend too far, player loses
-        if (hero && enemy.y + enemy.height >= hero.y) {
-          endGame(false);
-        }
+      enemies.forEach((enemy) => {
+        enemy.y += 10; // a bit of extra drop when bouncing off the wall
       });
     }
   }
 
   if (enemyShootTimer >= enemyShootInterval) {
     enemyShootTimer = 0;
+
     const aliveEnemies = enemies.filter((e) => !e.dead);
     if (aliveEnemies.length > 0) {
       const shooter =
