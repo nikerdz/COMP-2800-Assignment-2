@@ -1,0 +1,9 @@
+{
+  "name": "space-game",
+  "version": "1.0.0",
+  "description": "COMP 2800 Assignment 2 - Space Invaders Game",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx http-server . -p 5000"
+  }
+}

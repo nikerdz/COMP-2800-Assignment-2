@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic page setup -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Title shown in the browser tab -->
+  <title>Space Invaders</title>
+
+  <style>
+    /* 
+      Center the game canvas on the page and give the page
+      a black background to match the game theme.
+    */
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Add a visible white border around the game area */
+    canvas {
+      border: 1px solid white;
+    }
+  </style>
+</head>
+<body>
+  <!-- 
+    Main drawing surface for the game.
+    All game graphics are rendered onto this canvas using JavaScript.
+  -->
+  <canvas id="canvas" width="1024" height="768"></canvas>
+
+  <!-- Link to the main game logic -->
+  <script src="app.js"></script>
+</body>
+</html>
