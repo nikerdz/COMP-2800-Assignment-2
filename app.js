@@ -349,7 +349,7 @@ function registerEventHandlers() {
 */
 function setupKeyboard() {
   window.addEventListener("keydown", (e) => {
-    if (["ArrowLeft", "ArrowRight", " ", "Enter"].includes(e.key)) {
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " ", "Enter"].includes(e.key)) {
       e.preventDefault();
     }
 
