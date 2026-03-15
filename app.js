@@ -349,7 +349,7 @@ function registerEventHandlers() {
 */
 function setupKeyboard() {
   window.addEventListener("keydown", (e) => {
-    if (["ArrowLeft", "ArrowRight", "Space", "Enter"].includes(e.code)) {
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Space", "Enter"].includes(e.code)) {
       e.preventDefault();
     }
 
@@ -357,6 +357,12 @@ function setupKeyboard() {
       restartGame();
       return;
     }
+
+    eventEmitter.emit(Messages.KEY_EVENT_DOWN, e.key);
+  });
+
+  window.addEventListener("keyup", (e) => {
+    eventEmitter.emit(Messages.KEY_EVENT_UP, e.key);
   });
 }
 
