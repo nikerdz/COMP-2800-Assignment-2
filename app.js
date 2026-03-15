@@ -424,11 +424,11 @@ function updateHero() {
     hero.moveRight(canvas.width);
   }
 
-  if (pressedKeys["Space"]) {
+  if (pressedKeys[" "] || pressedKeys["Spacebar"]) {
     if (hero.fire()) {
-      createHeroLaser();
+        createHeroLaser();
     }
-  }
+}
 
   hero.decrementCooldown();
 }
