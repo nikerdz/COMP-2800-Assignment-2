@@ -349,20 +349,14 @@ function registerEventHandlers() {
 */
 function setupKeyboard() {
   window.addEventListener("keydown", (e) => {
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " ", "Enter"].includes(e.key)) {
+    if (["ArrowLeft", "ArrowRight", "Space", "Enter"].includes(e.code)) {
       e.preventDefault();
     }
 
-    if (isGameOver && e.key === "Enter") {
+    if (isGameOver && e.code === "Enter") {
       restartGame();
       return;
     }
-
-    eventEmitter.emit(Messages.KEY_EVENT_DOWN, e.key);
-  });
-
-  window.addEventListener("keyup", (e) => {
-    eventEmitter.emit(Messages.KEY_EVENT_UP, e.key);
   });
 }
 
@@ -413,7 +407,7 @@ function update() {
 function updateHero() {
   if (!hero || hero.dead) return;
 
-  const minY = canvas.height * 0.55; // player stays in bottom 45% of screen
+  const minY = canvas.height * 0.4;
   const maxY = canvas.height;
 
   if (pressedKeys["ArrowLeft"]) {
@@ -424,15 +418,7 @@ function updateHero() {
     hero.moveRight(canvas.width);
   }
 
-  if (pressedKeys["ArrowUp"]) {
-    hero.moveUp(minY);
-  }
-
-  if (pressedKeys["ArrowDown"]) {
-    hero.moveDown(maxY);
-  }
-
-  if (pressedKeys[" "] || pressedKeys["Spacebar"]) {
+  if (pressedKeys["Space"]) {
     if (hero.fire()) {
       createHeroLaser();
     }
