@@ -43,7 +43,7 @@ COMP-2800-Assignment-2/
 
 ## How to Run
 
-### Option 3: Visit the Game's Webpage
+### Option 1: Visit the Game's Webpage
 
 The game has been hosted through Microsoft Azure - Static Web Apps.
 
