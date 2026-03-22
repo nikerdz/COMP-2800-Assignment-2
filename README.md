@@ -47,7 +47,7 @@ COMP-2800-Assignment-2/
 
 The game has been hosted through Microsoft Azure - Static Web Apps.
 
-Visit the site at this link to play the game: https://proud-smoke-04b391d1e.1.azurestaticapps.net/
+1. Visit the site at this link to play the game: https://proud-smoke-04b391d1e.1.azurestaticapps.net/
 
 ### Option 2: GitHub Codespaces
 
